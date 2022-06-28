@@ -3,7 +3,6 @@ package router
 import (
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	swagFile "github.com/swaggo/files"
@@ -57,8 +56,8 @@ func index(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"app":    version.AppName,
 		"pid":    os.Getegid(),
-		"uptime": time.Now(),
 		"build":  version.Info(),
+		"uptime": version.Uptime,
 	})
 }
 

@@ -5,6 +5,7 @@ import (
 	"runtime"
 	"strings"
 	"text/template"
+	"time"
 )
 
 // Build information
@@ -15,6 +16,7 @@ var (
 	BuildUser string
 	BuildDate string
 	AppName   = "sketch"
+	Uptime    = time.Now()
 	GoVersion = runtime.Version()
 )
 

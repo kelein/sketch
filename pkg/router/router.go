@@ -55,7 +55,7 @@ func initRouter() {
 func index(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"app":    version.AppName,
-		"pid":    os.Getegid(),
+		"pid":    os.Getpid(),
 		"build":  version.Info(),
 		"uptime": version.Uptime,
 	})

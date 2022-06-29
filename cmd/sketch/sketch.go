@@ -10,6 +10,8 @@ import (
 
 	"sketch/pkg/router"
 	"sketch/pkg/version"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
@@ -19,6 +21,11 @@ var (
 var (
 	ver = flag.Bool("version", false, "show the binary build version")
 )
+
+func init() {
+	// * Register Prometheus Metrics Collector
+	prometheus.MustRegister(version.NewCollector(version.AppName))
+}
 
 //go:generate swag init -g sketch.go -o ../../pkg/swagger
 

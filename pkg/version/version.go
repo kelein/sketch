@@ -2,10 +2,13 @@ package version
 
 import (
 	"bytes"
+	"fmt"
 	"runtime"
 	"strings"
 	"text/template"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 // Build information
@@ -18,6 +21,7 @@ var (
 	AppName   = "sketch"
 	Uptime    = time.Now()
 	GoVersion = runtime.Version()
+	Platform  = runtime.GOOS + "/" + runtime.GOARCH
 )
 
 var versionInfoTmpl = `
@@ -48,7 +52,7 @@ func Print() string {
 		"buildUser": BuildUser,
 		"buildDate": BuildDate,
 		"goVersion": GoVersion,
-		"platform":  runtime.GOOS + "/" + runtime.GOARCH,
+		"platform":  Platform,
 	}
 	t := template.Must(template.New("version").Parse(versionInfoTmpl))
 
@@ -57,4 +61,24 @@ func Print() string {
 		panic(err)
 	}
 	return strings.TrimSpace(buf.String())
+}
+
+// NewCollector exports metrics about program build info
+func NewCollector(program string) prometheus.Collector {
+	return prometheus.NewGaugeFunc(
+		prometheus.GaugeOpts{
+			Namespace: program,
+			Name:      "build_info",
+			Help:      fmt.Sprintf("%s build info with platform and goversion", program),
+			ConstLabels: prometheus.Labels{
+				"branch":    Branch,
+				"version":   Version,
+				"revision":  Revision,
+				"platform":  Platform,
+				"goversion": GoVersion,
+				"builduser": BuildUser,
+			},
+		},
+		func() float64 { return 1 },
+	)
 }

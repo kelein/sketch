@@ -1,5 +1,7 @@
 ## Created by .ignore support plugin (hsz.mobi)
 bin
+sketch
+cmd/sketch/sketch
 
 # General
 .AppleDouble

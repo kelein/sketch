@@ -7,27 +7,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Ginprof pprof middleware for gin framework
-type Ginprof struct {
+// GinProf pprof middleware for gin framework
+type GinProf struct {
 	Endpoint string
 }
 
-// NewGinprof return ginprof with prefix
-func NewGinprof(prefixs ...string) *Ginprof {
+// NewGinProf return ginprof with prefix
+func NewGinProf(prefixs ...string) *GinProf {
 	prefix := "/debug/pprof"
 	if len(prefixs) > 0 {
 		prefix = prefixs[0]
 	}
-	return &Ginprof{Endpoint: prefix}
+	return &GinProf{Endpoint: prefix}
 }
 
 // Register inject ginprof http routers
-func (gf *Ginprof) Register(app *gin.Engine) {
+func (gf *GinProf) Register(app *gin.Engine) {
 	gf.routers(app)
 }
 
-func (gf *Ginprof) routers(app *gin.Engine) {
+func (gf *GinProf) routers(app *gin.Engine) {
 	g := app.Group(gf.Endpoint)
+
 	g.GET("/", hwrap(pprof.Index))
 	g.GET("/trace", hwrap(pprof.Trace))
 	g.GET("/symbol", hwrap(pprof.Symbol))

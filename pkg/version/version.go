@@ -71,6 +71,7 @@ func NewCollector(program string) prometheus.Collector {
 			Name:      "build_info",
 			Help:      fmt.Sprintf("%s build info with platform and goversion", program),
 			ConstLabels: prometheus.Labels{
+				"job":       program,
 				"branch":    Branch,
 				"version":   Version,
 				"revision":  Revision,

@@ -27,12 +27,13 @@ func initApp() {
 	app.Use(gin.Recovery())
 
 	// Enable Pprof Middleware
-	prof := middleware.NewGinprof()
+	prof := middleware.NewGinProf()
 	prof.Register(app)
 
 	// Enable Prometheus Middleware
 	prom := middleware.NewProm(version.AppName)
 	prom.Register(app)
+	app.Use(prom.Run())
 }
 
 func initRouter() {

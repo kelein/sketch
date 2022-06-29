@@ -28,17 +28,19 @@ func NewProm(app string) *Metrics {
 	m := Metrics{}
 
 	m.reqs = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace:   app,
 		Name:        reqsMetricName,
 		Help:        "How many http requests processed, with labels status code, method and path.",
-		ConstLabels: prometheus.Labels{"app": app},
+		ConstLabels: prometheus.Labels{"job": app},
 	},
 		[]string{"code", "method", "path"},
 	)
 
 	m.latency = prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Namespace:   app,
 		Name:        latencyMetricName,
 		Help:        "How long it took to process the request, with labels status code, method and path.",
-		ConstLabels: prometheus.Labels{"app": app},
+		ConstLabels: prometheus.Labels{"job": app},
 		Buckets:     DefaultBuckets,
 	},
 		[]string{"code", "method", "path"},
@@ -57,7 +59,7 @@ func (m *Metrics) Register(app *gin.Engine) {
 	})
 }
 
-// Run start this middleware with context
+// Run start prometheus middleware with context
 func (m *Metrics) Run() gin.HandlerFunc {
 	return m.serve
 }

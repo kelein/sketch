@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/prometheus/client_golang v1.13.0
 	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe
-	github.com/swaggo/gin-swagger v1.5.1
+	github.com/swaggo/gin-swagger v1.5.2
 	github.com/swaggo/swag v1.8.4
 )
 

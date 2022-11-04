@@ -36,9 +36,9 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: install deps
-        if: steps.cache.output.cache-hit != 'true'
-        run: make --debug install_deps
+      # - name: install deps
+      #  if: steps.cache.output.cache-hit != 'true'
+      #  run: make --debug install_deps
       - name: restore base benchmark result
         uses: actions/cache@v3
         with:

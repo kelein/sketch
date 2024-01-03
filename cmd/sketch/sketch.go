@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
@@ -41,6 +42,8 @@ func main() {
 	showVersion()
 
 	go router.Start()
+	slog.Info("server start listen on", "addr", ":9000")
+
 	signal.Notify(term, os.Interrupt, syscall.SIGTERM)
 	select {
 	case <-term:

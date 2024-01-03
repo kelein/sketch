@@ -24,6 +24,9 @@ app-linux:
 
 build: app
 
+run:
+	@go run cmd/sketch/sketch.go
+
 image:
 	@make app-linux
 	@docker build . -t ${TAG}

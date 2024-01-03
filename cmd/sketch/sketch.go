@@ -19,6 +19,7 @@ var (
 )
 
 var (
+	v   = flag.Bool("v", false, "show the binary build version")
 	ver = flag.Bool("version", false, "show the binary build version")
 )
 
@@ -48,10 +49,8 @@ func main() {
 }
 
 func showVersion() {
-	for _, arg := range os.Args {
-		if arg == "-v" || arg == "--version" {
-			fmt.Println(version.Print())
-			os.Exit(0)
-		}
+	if *v || *ver {
+		fmt.Println(version.Print())
+		os.Exit(0)
 	}
 }
